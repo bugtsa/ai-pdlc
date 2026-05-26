@@ -11,6 +11,7 @@
     "type": "node",
     "entry_point": "src/bin/ai-pdlc-mcp.mjs",
     "mcp_config": {
+      "command": "node",
       "env": {
         "AI_PDLC_REPO_ROOT": "${user_config.repoRoot}"
       }

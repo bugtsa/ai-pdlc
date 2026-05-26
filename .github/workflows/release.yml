@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run smoke tests
+        run: npm test
+
+      - name: Validate Claude Desktop manifest
+        run: npm run manifest:validate
+
+      - name: Build Claude Desktop bundle
+        run: npm run bundle:claude-desktop
+
+      - name: Build Windows portable bundle
+        run: npm run bundle:windows-portable
+
+      - name: Build npm tarball
+        run: npm run pack:npm
+
+      - name: Publish GitHub release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.tgz
+            dist/*.mcpb
+            dist/*-windows-portable.zip

@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run smoke tests
+        run: npm test
+
+      - name: Validate Claude Desktop manifest
+        run: npm run manifest:validate
+
+      - name: Verify npm package contents
+        run: npm run pack:npm:dry
+
+      - name: Build Claude Desktop bundle
+        run: npm run bundle:claude-desktop
+
+      - name: Build Windows portable bundle
+        run: npm run bundle:windows-portable

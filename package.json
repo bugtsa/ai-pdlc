@@ -23,10 +23,19 @@
     "doctor": "node src/bin/ai-pdlc.mjs doctor",
     "setup:codex:dry": "node src/bin/ai-pdlc.mjs setup-codex --dry-run",
     "setup:claude:dry": "node src/bin/ai-pdlc.mjs setup-claude-code --dry-run",
-    "smoke": "node scripts/dev/smoke.mjs"
+    "smoke": "node scripts/dev/smoke.mjs",
+    "test": "node scripts/dev/smoke.mjs",
+    "manifest:validate": "npx --no-install mcpb validate claude-desktop/manifest.json",
+    "bundle:claude-desktop": "node scripts/release/build-mcpb.mjs",
+    "bundle:windows-portable": "node scripts/release/build-windows-portable.mjs",
+    "pack:npm": "npm pack --pack-destination dist",
+    "pack:npm:dry": "npm pack --dry-run"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@anthropic-ai/mcpb": "^2.1.2"
   }
 }

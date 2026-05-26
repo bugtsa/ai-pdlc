@@ -1,15 +1,29 @@
 #!/usr/bin/env node
 
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DEFAULT_REPO_ROOT = path.resolve(__dirname, '..', '..', 'fixtures', 'repo-root');
+const DEFAULT_PACKAGE_ID = 'fixture_package';
+
 function parseArgs(argv) {
-  let repoRoot = process.env.AI_PDLC_REPO_ROOT ?? null;
+  let repoRoot = process.env.AI_PDLC_REPO_ROOT ?? DEFAULT_REPO_ROOT;
+  let packageId = process.env.AI_PDLC_PACKAGE_ID ?? DEFAULT_PACKAGE_ID;
 
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
     if (arg === '--repo-root') {
       repoRoot = argv[index + 1] ?? null;
+      index += 1;
+      continue;
+    }
+    if (arg === '--package-id') {
+      packageId = argv[index + 1] ?? null;
       index += 1;
       continue;
     }
@@ -24,15 +38,36 @@ function parseArgs(argv) {
     throw new Error('Provide --repo-root <path> or set AI_PDLC_REPO_ROOT.');
   }
 
-  return { repoRoot };
+  if (!packageId) {
+    throw new Error('Provide --package-id <id> or set AI_PDLC_PACKAGE_ID.');
+  }
+
+  return { repoRoot, packageId };
 }
 
 function printHelp() {
-  console.log('Usage: node scripts/dev/smoke.mjs --repo-root <path>');
+  console.log(
+    [
+      'Usage: node scripts/dev/smoke.mjs [--repo-root <path>] [--package-id <id>]',
+      '',
+      `Default repo root: ${DEFAULT_REPO_ROOT}`,
+      `Default package id: ${DEFAULT_PACKAGE_ID}`
+    ].join('\n')
+  );
+}
+
+function extractText(result) {
+  return result.content?.find(item => item.type === 'text')?.text ?? null;
+}
+
+function assertCondition(condition, message) {
+  if (!condition) {
+    throw new Error(message);
+  }
 }
 
 async function main() {
-  const { repoRoot } = parseArgs(process.argv.slice(2));
+  const { repoRoot, packageId } = parseArgs(process.argv.slice(2));
   const transport = new StdioClientTransport({
     command: 'node',
     args: ['src/bin/ai-pdlc-mcp.mjs', '--repo-root', repoRoot]
@@ -48,17 +83,71 @@ async function main() {
   const validation = await client.callTool({
     name: 'aipdlc_validate_feature_package',
     arguments: {
-      package_id: 'aipdlc_cross_client_packaging'
+      package_id: packageId
     }
   });
+  const search = await client.callTool({
+    name: 'aipdlc_search_docs',
+    arguments: {
+      query: 'AI-PDLC fixture',
+      scope: 'all',
+      max_results: 3
+    }
+  });
+  const readme = await client.callTool({
+    name: 'aipdlc_read_doc',
+    arguments: {
+      path: 'docs/ai-pdlc/README.md',
+      start_line: 1,
+      end_line: 20
+    }
+  });
+  const summary = await client.callTool({
+    name: 'get_feature_package_summary',
+    arguments: {
+      feature_id: packageId
+    }
+  });
+  const validationText = extractText(validation);
+  const searchText = extractText(search);
+  const readmeText = extractText(readme);
+  const summaryText = extractText(summary);
+
+  assertCondition(tools.tools.length >= 9, `Expected at least 9 tools, got ${tools.tools.length}.`);
+  assertCondition(
+    resources.resources.length >= 5,
+    `Expected at least 5 resources, got ${resources.resources.length}.`
+  );
+  assertCondition(validation.isError !== true, 'Feature package validation returned an error.');
+  assertCondition(
+    validationText?.includes(`Package: docs/ai-pdlc/features/${packageId}`) === true,
+    'Validation output did not mention the expected feature package.'
+  );
+  assertCondition(
+    validationText?.includes('required: missing') !== true,
+    'Validation output reported missing required feature package files.'
+  );
+  assertCondition(
+    searchText?.includes('AI-PDLC fixture') === true,
+    'Search output did not include the expected fixture text.'
+  );
+  assertCondition(
+    readmeText?.includes('AI-PDLC Fixture Repository') === true,
+    'README output did not include the expected fixture heading.'
+  );
+  assertCondition(summaryText?.includes(packageId) === true, 'Feature summary did not mention the package id.');
 
   console.log(
     JSON.stringify(
       {
         repo_root: repoRoot,
+        package_id: packageId,
         tools: tools.tools.length,
         resources: resources.resources.length,
-        validation: validation.content?.[0]?.text ?? null
+        validation: validationText,
+        search: searchText,
+        readme_excerpt: readmeText,
+        summary: summaryText
       },
       null,
       2

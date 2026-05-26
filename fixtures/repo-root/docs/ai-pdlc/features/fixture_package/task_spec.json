@@ -1,0 +1,20 @@
+{
+  "title": "Fixture Packaging Validation",
+  "goal": "Exercise the AI-PDLC MCP tools against a known-good local feature package.",
+  "scope": {
+    "in": [
+      "Feature package validation",
+      "Search and read flows"
+    ],
+    "out": [
+      "Real product packaging"
+    ]
+  },
+  "acceptance_criteria": [
+    "The package validates without missing required files.",
+    "The package is discoverable by search and summary tools."
+  ],
+  "definition_of_done": [
+    "Smoke tests pass against the fixture package."
+  ]
+}

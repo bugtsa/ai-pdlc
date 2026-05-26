@@ -1,18 +1,18 @@
 class AiPdlc < Formula
   desc "AI-PDLC CLI, Codex skill bundle, and local MCP server"
   homepage "https://github.com/REPLACE_ME/ai-pdlc"
-  url "https://github.com/REPLACE_ME/ai-pdlc/releases/download/v0.1.0/ai-pdlc-0.1.0.tar.gz"
-  sha256 "REPLACE_WITH_RELEASE_SHA256"
-  license "MIT"
+  url "https://registry.npmjs.org/ai-pdlc/-/ai-pdlc-0.1.0.tgz"
+  sha256 "REPLACE_WITH_NPM_TARBALL_SHA256"
+  license :cannot_represent
 
   depends_on "node" => :runtime
 
   def install
-    libexec.install Dir["*"]
-    bin.write_exec_script libexec/"src/bin/ai-pdlc.mjs"
-    bin.write_exec_script libexec/"src/bin/ai-pdlc-mcp.mjs"
-    pkgshare.install "claude-desktop"
-    pkgshare.install "skills"
+    system "npm", "install", *std_npm_args
+
+    package_root = libexec/"lib/node_modules/ai-pdlc"
+    pkgshare.install package_root/"claude-desktop"
+    pkgshare.install package_root/"skills"
   end
 
   def caveats
