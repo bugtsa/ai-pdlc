@@ -68,6 +68,10 @@ function assertCondition(condition, message) {
 
 async function main() {
   const { repoRoot, packageId } = parseArgs(process.argv.slice(2));
+  const normalizedRepoRoot = path.resolve(repoRoot);
+  const usingFixture =
+    normalizedRepoRoot === DEFAULT_REPO_ROOT && packageId === DEFAULT_PACKAGE_ID;
+  const searchQuery = usingFixture ? 'AI-PDLC fixture' : 'AI-PDLC';
   const transport = new StdioClientTransport({
     command: 'node',
     args: ['src/bin/ai-pdlc-mcp.mjs', '--repo-root', repoRoot]
@@ -89,7 +93,7 @@ async function main() {
   const search = await client.callTool({
     name: 'aipdlc_search_docs',
     arguments: {
-      query: 'AI-PDLC fixture',
+      query: searchQuery,
       scope: 'all',
       max_results: 3
     }
@@ -128,12 +132,20 @@ async function main() {
     'Validation output reported missing required feature package files.'
   );
   assertCondition(
-    searchText?.includes('AI-PDLC fixture') === true,
-    'Search output did not include the expected fixture text.'
+    usingFixture
+      ? searchText?.includes('AI-PDLC fixture') === true
+      : searchText?.includes('AI-PDLC') === true,
+    usingFixture
+      ? 'Search output did not include the expected fixture text.'
+      : 'Search output did not include the expected generic AI-PDLC text.'
   );
   assertCondition(
-    readmeText?.includes('AI-PDLC Fixture Repository') === true,
-    'README output did not include the expected fixture heading.'
+    usingFixture
+      ? readmeText?.includes('AI-PDLC Fixture Repository') === true
+      : readmeText?.includes('docs/ai-pdlc/README.md lines') === true,
+    usingFixture
+      ? 'README output did not include the expected fixture heading.'
+      : 'README output was empty or malformed.'
   );
   assertCondition(summaryText?.includes(packageId) === true, 'Feature summary did not mention the package id.');
 
