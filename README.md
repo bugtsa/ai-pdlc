@@ -12,6 +12,8 @@ This repository packages:
 
 Canonical upstream: `https://github.com/bugtsa/ai-pdlc`
 
+Latest release: `https://github.com/bugtsa/ai-pdlc/releases/tag/v0.1.0`
+
 ## Repository Layout
 
 ```text
@@ -40,6 +42,24 @@ fixtures/
 - `WinGet` uses a Windows portable zip plus a Node runtime dependency.
 
 This keeps one codebase and one Node runtime story across Codex, Claude Code, and Claude Desktop.
+
+## Install
+
+### macOS
+
+```bash
+brew install bugtsa/ai-pdlc/ai-pdlc
+```
+
+### Claude Desktop
+
+- Download `ai-pdlc-0.1.0.mcpb` from the GitHub release assets.
+- Open it in Claude Desktop and choose the target repo root when prompted.
+
+### Windows
+
+- The release already includes `ai-pdlc-0.1.0-windows-portable.zip`.
+- WinGet manifests are checked in under `packaging/winget/` and are ready for submission, but they are not yet merged into the public WinGet community index.
 
 ## Local Development
 
