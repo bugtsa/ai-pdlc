@@ -1,8 +1,8 @@
 class AiPdlc < Formula
   desc "AI-PDLC CLI, Codex skill bundle, and local MCP server"
-  homepage "https://github.com/REPLACE_ME/ai-pdlc"
-  url "https://registry.npmjs.org/ai-pdlc/-/ai-pdlc-0.1.0.tgz"
-  sha256 "REPLACE_WITH_NPM_TARBALL_SHA256"
+  homepage "https://github.com/bugtsa/ai-pdlc"
+  url "https://github.com/bugtsa/ai-pdlc/releases/download/v0.1.0/ai-pdlc-0.1.0.tgz"
+  sha256 "a9aac76332e2782a7857d47e93bb9c62f0fb513faaf09c0472cb20078a73eca8"
   license :cannot_represent
 
   depends_on "node" => :runtime

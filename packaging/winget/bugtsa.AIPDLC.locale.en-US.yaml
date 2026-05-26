@@ -1,10 +1,13 @@
-# Replace publisher, URLs, and release notes before submission.
-PackageIdentifier: YourOrg.AIPDLC
+# Ready for WinGet submission. Update release notes as versions evolve.
+PackageIdentifier: bugtsa.AIPDLC
 PackageVersion: 0.1.0
 PackageLocale: en-US
-Publisher: YourOrg
-PublisherUrl: https://github.com/REPLACE_ME/ai-pdlc
+Publisher: Vladimir Polkhovtsev
+PublisherUrl: https://github.com/bugtsa
+PublisherSupportUrl: https://github.com/bugtsa/ai-pdlc/issues
+PackageUrl: https://github.com/bugtsa/ai-pdlc
 PackageName: AI-PDLC
+License: UNLICENSED
 ShortDescription: AI-PDLC CLI, Codex skill bundle, and local MCP server for Codex and Claude clients.
 Moniker: ai-pdlc
 Tags:

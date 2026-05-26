@@ -1,5 +1,5 @@
-# Replace installer URLs, hashes, publisher metadata, and package ids before submission.
-PackageIdentifier: YourOrg.AIPDLC
+# Ready for WinGet submission. Keep version, URLs, and SHA256 aligned with the GitHub release assets.
+PackageIdentifier: bugtsa.AIPDLC
 PackageVersion: 0.1.0
 InstallerType: zip
 NestedInstallerType: portable
@@ -16,7 +16,7 @@ Dependencies:
     - PackageIdentifier: OpenJS.NodeJS.LTS
 Installers:
   - Architecture: x64
-    InstallerUrl: https://github.com/REPLACE_ME/ai-pdlc/releases/download/v0.1.0/ai-pdlc-0.1.0-windows-portable.zip
-    InstallerSha256: REPLACE_WITH_WINDOWS_PORTABLE_SHA256
+    InstallerUrl: https://github.com/bugtsa/ai-pdlc/releases/download/v0.1.0/ai-pdlc-0.1.0-windows-portable.zip
+    InstallerSha256: 13cfa8adb24c5eba5316b549e764368ab4ce897c9f8d00a6cf2519ecc28f8b5a
 ManifestType: installer
 ManifestVersion: 1.10.0
