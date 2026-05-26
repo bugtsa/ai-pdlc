@@ -1,0 +1,20 @@
+# Replace publisher, URLs, and release notes before submission.
+PackageIdentifier: YourOrg.AIPDLC
+PackageVersion: 0.1.0
+PackageLocale: en-US
+Publisher: YourOrg
+PublisherUrl: https://github.com/REPLACE_ME/ai-pdlc
+PackageName: AI-PDLC
+ShortDescription: AI-PDLC CLI, Codex skill bundle, and local MCP server for Codex and Claude clients.
+Moniker: ai-pdlc
+Tags:
+  - mcp
+  - codex
+  - claude
+  - ai-pdlc
+ReleaseNotes: |-
+  - Adds ai-pdlc doctor, setup-codex, and setup-claude-code
+  - Adds ai-pdlc mcp-serve and ai-pdlc-mcp entrypoints
+  - Adds bundled Claude Desktop manifest and Codex skill
+ManifestType: defaultLocale
+ManifestVersion: 1.10.0

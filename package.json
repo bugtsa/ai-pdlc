@@ -1,0 +1,32 @@
+{
+  "name": "ai-pdlc",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Cross-client AI-PDLC CLI, skill bundle, and local MCP server",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "ai-pdlc": "src/bin/ai-pdlc.mjs",
+    "ai-pdlc-mcp": "src/bin/ai-pdlc-mcp.mjs"
+  },
+  "files": [
+    "src/",
+    "skills/",
+    "claude-desktop/",
+    "packaging/",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node src/bin/ai-pdlc-mcp.mjs",
+    "doctor": "node src/bin/ai-pdlc.mjs doctor",
+    "setup:codex:dry": "node src/bin/ai-pdlc.mjs setup-codex --dry-run",
+    "setup:claude:dry": "node src/bin/ai-pdlc.mjs setup-claude-code --dry-run",
+    "smoke": "node scripts/dev/smoke.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.0.0"
+  }
+}

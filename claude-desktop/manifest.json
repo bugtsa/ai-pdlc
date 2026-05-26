@@ -1,0 +1,49 @@
+{
+  "$schema": "https://mpaktrust.org/schemas/mcpb/v0.4/manifest.json",
+  "manifest_version": "0.4",
+  "name": "ai-pdlc",
+  "version": "0.1.0",
+  "description": "AI-PDLC documentation assistant for local repositories. Provides search, read, feature-package validation, and scaffolding over repo-local docs/ai-pdlc artifacts.",
+  "author": {
+    "name": "AI-PDLC"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "src/bin/ai-pdlc-mcp.mjs",
+    "mcp_config": {
+      "env": {
+        "AI_PDLC_REPO_ROOT": "${user_config.repoRoot}"
+      }
+    }
+  },
+  "user_config": {
+    "repoRoot": {
+      "type": "directory",
+      "title": "AI-PDLC repository root",
+      "description": "Choose the project directory that contains docs/ai-pdlc.",
+      "required": true
+    }
+  },
+  "tools": [
+    {
+      "name": "aipdlc_search_docs",
+      "description": "Search AI-PDLC docs, feature packages, prompts, and current-task notes."
+    },
+    {
+      "name": "aipdlc_read_doc",
+      "description": "Read a specific AI-PDLC or current-task document by path, basename, or suffix."
+    },
+    {
+      "name": "aipdlc_validate_feature_package",
+      "description": "Validate the basic structure of an AI-PDLC feature package."
+    },
+    {
+      "name": "recommend_process_assets",
+      "description": "Recommend which AI-PDLC docs and prompts to load for a task shape and stage."
+    },
+    {
+      "name": "scaffold_feature_package",
+      "description": "Create or refresh a feature package from the AI-PDLC templates."
+    }
+  ]
+}

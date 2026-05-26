@@ -1,0 +1,19 @@
+# Replace installer URLs, hashes, and nested file paths before submission.
+PackageIdentifier: YourOrg.AIPDLC
+PackageVersion: 0.1.0
+InstallerType: zip
+NestedInstallerType: portable
+NestedInstallerFiles:
+  - RelativeFilePath: ai-pdlc.exe
+    PortableCommandAlias: ai-pdlc
+  - RelativeFilePath: ai-pdlc-mcp.exe
+    PortableCommandAlias: ai-pdlc-mcp
+Commands:
+  - ai-pdlc
+  - ai-pdlc-mcp
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/REPLACE_ME/ai-pdlc/releases/download/v0.1.0/ai-pdlc-0.1.0-windows-x64.zip
+    InstallerSha256: REPLACE_WITH_WINDOWS_X64_SHA256
+ManifestType: installer
+ManifestVersion: 1.10.0
