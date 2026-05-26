@@ -10,6 +10,8 @@ This repository packages:
 - Claude Desktop extension manifest under `claude-desktop/`
 - starter packaging templates for Homebrew and WinGet
 
+Canonical upstream: `https://github.com/bugtsa/ai-pdlc`
+
 ## Repository Layout
 
 ```text
@@ -93,6 +95,7 @@ npm run bundle:claude-desktop
 
 - The build writes `dist/ai-pdlc-<version>.mcpb`.
 - The Desktop user selects a repo root via the `repoRoot` directory field, which is mapped to `AI_PDLC_REPO_ROOT`.
+- A release-ready bundle is published as a GitHub release asset.
 
 ### WinGet
 
@@ -131,6 +134,10 @@ Before publishing, replace these placeholders:
 7. Publish the npm tarball and attach the `dist/*` assets to the GitHub release tag
 
 The generated `.mcpb` bundle is unsigned by default. If you need trust metadata, add a signing step with `mcpb sign` before publishing the release asset.
+
+## License Status
+
+The repository is public, but the package is currently marked `UNLICENSED`. If you want third parties to reuse or redistribute it, add an explicit open-source license before publishing to package indexes.
 
 ## Current Status
 

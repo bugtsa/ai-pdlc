@@ -3,7 +3,22 @@
   "version": "0.1.0",
   "type": "module",
   "description": "Cross-client AI-PDLC CLI, skill bundle, and local MCP server",
+  "author": "Vladimir Polkhovtsev",
   "license": "UNLICENSED",
+  "homepage": "https://github.com/bugtsa/ai-pdlc",
+  "bugs": {
+    "url": "https://github.com/bugtsa/ai-pdlc/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bugtsa/ai-pdlc.git"
+  },
+  "keywords": [
+    "mcp",
+    "codex",
+    "claude",
+    "ai-pdlc"
+  ],
   "engines": {
     "node": ">=20"
   },
@@ -15,7 +30,6 @@
     "src/",
     "skills/",
     "claude-desktop/",
-    "packaging/",
     "README.md"
   ],
   "scripts": {
