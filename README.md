@@ -14,6 +14,8 @@ Canonical upstream: `https://github.com/bugtsa/ai-pdlc`
 
 Latest release: `https://github.com/bugtsa/ai-pdlc/releases/latest`
 
+Codex setup runbook: [`CODEX_SETUP.md`](./CODEX_SETUP.md)
+
 ## Repository Layout
 
 ```text
