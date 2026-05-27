@@ -38,3 +38,48 @@ jobs:
 
       - name: Build Windows portable bundle
         run: npm run bundle:windows-portable
+
+  windows-smoke:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.21.4'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Windows portable bundle
+        run: npm run bundle:windows-portable
+
+      - name: Expand Windows bundle
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist\win-smoke | Out-Null
+          Expand-Archive -Path dist\ai-pdlc-0.1.1-windows-portable.zip -DestinationPath dist\win-smoke -Force
+
+      - name: Run CLI help
+        shell: pwsh
+        run: |
+          & "$PWD\dist\win-smoke\bin\ai-pdlc.exe" help
+
+      - name: Run doctor against fixture repo
+        shell: pwsh
+        run: |
+          & "$PWD\dist\win-smoke\bin\ai-pdlc.exe" doctor --repo-root "$PWD\fixtures\repo-root" --json | Out-File -FilePath dist\win-smoke\doctor.json
+          Get-Content dist\win-smoke\doctor.json
+
+      - name: Run setup dry-runs
+        shell: pwsh
+        run: |
+          & "$PWD\dist\win-smoke\bin\ai-pdlc.exe" setup-codex --dry-run --repo-root "$PWD\fixtures\repo-root" --json | Out-File -FilePath dist\win-smoke\setup-codex.json
+          & "$PWD\dist\win-smoke\bin\ai-pdlc.exe" setup-claude-code --dry-run --repo-root "$PWD\fixtures\repo-root" --json | Out-File -FilePath dist\win-smoke\setup-claude.json
+          Get-Content dist\win-smoke\setup-codex.json
+          Get-Content dist\win-smoke\setup-claude.json

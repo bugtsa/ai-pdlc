@@ -61,6 +61,12 @@ brew install bugtsa/ai-pdlc/ai-pdlc
 - The release includes a Windows portable zip with native `.exe` launchers.
 - WinGet manifests are checked in under `packaging/winget/`.
 
+Quick local smoke test on a Windows machine:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\dev\test-release-windows.ps1 -RepoRoot C:\path\to\your\repo
+```
+
 ## Local Development
 
 1. Install dependencies:
