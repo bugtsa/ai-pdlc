@@ -18,6 +18,10 @@ function run(command, args, options = {}) {
   const result = spawnSync(command, args, {
     cwd: options.cwd ?? packageRoot,
     encoding: 'utf8',
+    env: {
+      ...process.env,
+      ...(options.env ?? {})
+    },
     stdio: ['ignore', 'pipe', 'pipe']
   });
 
@@ -37,13 +41,24 @@ function run(command, args, options = {}) {
   return result.stdout?.trim() ?? '';
 }
 
-function buildCmdLauncher(targetScript) {
-  return [
-    '@echo off',
-    'setlocal',
-    'set SCRIPT_DIR=%~dp0',
-    `node "%SCRIPT_DIR%..\\${targetScript}" %*`
-  ].join('\r\n');
+function buildWindowsLauncher(outputPath, executableName) {
+  run(
+    'go',
+    ['build', '-o', outputPath, '.'],
+    {
+      cwd: path.join(packageRoot, 'tools', 'windows-launcher'),
+      env: {
+        GOOS: 'windows',
+        GOARCH: 'amd64',
+        CGO_ENABLED: '0'
+      }
+    }
+  );
+
+  const builtPath = outputPath;
+  if (!builtPath.endsWith(`${executableName}.exe`)) {
+    throw new Error(`Unexpected launcher output path for ${executableName}: ${builtPath}`);
+  }
 }
 
 async function stagePortableBundle() {
@@ -58,15 +73,10 @@ async function stagePortableBundle() {
   await fs.copyFile(packageJsonPath, path.join(stageDir, 'package.json'));
   await fs.copyFile(packageLockPath, path.join(stageDir, 'package-lock.json'));
   await fs.copyFile(path.join(packageRoot, 'README.md'), path.join(stageDir, 'README.md'));
+  await fs.copyFile(path.join(packageRoot, 'LICENSE'), path.join(stageDir, 'LICENSE'));
 
-  await fs.writeFile(
-    path.join(stageDir, 'bin', 'ai-pdlc.cmd'),
-    `${buildCmdLauncher('src\\bin\\ai-pdlc.mjs')}\r\n`
-  );
-  await fs.writeFile(
-    path.join(stageDir, 'bin', 'ai-pdlc-mcp.cmd'),
-    `${buildCmdLauncher('src\\bin\\ai-pdlc-mcp.mjs')}\r\n`
-  );
+  buildWindowsLauncher(path.join(stageDir, 'bin', 'ai-pdlc.exe'), 'ai-pdlc');
+  buildWindowsLauncher(path.join(stageDir, 'bin', 'ai-pdlc-mcp.exe'), 'ai-pdlc-mcp');
 
   run('npm', ['ci', '--omit=dev'], { cwd: stageDir });
 }

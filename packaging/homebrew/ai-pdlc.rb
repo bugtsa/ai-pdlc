@@ -1,9 +1,9 @@
 class AiPdlc < Formula
   desc "AI-PDLC CLI, Codex skill bundle, and local MCP server"
   homepage "https://github.com/bugtsa/ai-pdlc"
-  url "https://github.com/bugtsa/ai-pdlc/releases/download/v0.1.0/ai-pdlc-0.1.0.tgz"
-  sha256 "a9aac76332e2782a7857d47e93bb9c62f0fb513faaf09c0472cb20078a73eca8"
-  license :cannot_represent
+  url "https://github.com/bugtsa/ai-pdlc/releases/download/v0.1.1/ai-pdlc-0.1.1.tgz"
+  sha256 "3a437fb0b0d4085e33c8d5704562d0a8bead94ac80e2921c471f57d41f494218"
+  license "Apache-2.0"
 
   depends_on "node" => :runtime
 

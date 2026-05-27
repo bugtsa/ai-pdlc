@@ -1,22 +1,20 @@
-# Ready for WinGet submission. Keep version, URLs, and SHA256 aligned with the GitHub release assets.
 PackageIdentifier: bugtsa.AIPDLC
-PackageVersion: 0.1.0
+PackageVersion: 0.1.1
 InstallerType: zip
 NestedInstallerType: portable
 NestedInstallerFiles:
-  - RelativeFilePath: bin/ai-pdlc.cmd
+  - RelativeFilePath: bin/ai-pdlc.exe
     PortableCommandAlias: ai-pdlc
-  - RelativeFilePath: bin/ai-pdlc-mcp.cmd
+  - RelativeFilePath: bin/ai-pdlc-mcp.exe
     PortableCommandAlias: ai-pdlc-mcp
-Commands:
-  - ai-pdlc
-  - ai-pdlc-mcp
+ReleaseDate: 2026-05-27
+UpgradeBehavior: install
 Dependencies:
   PackageDependencies:
     - PackageIdentifier: OpenJS.NodeJS.LTS
 Installers:
   - Architecture: x64
-    InstallerUrl: https://github.com/bugtsa/ai-pdlc/releases/download/v0.1.0/ai-pdlc-0.1.0-windows-portable.zip
-    InstallerSha256: 13cfa8adb24c5eba5316b549e764368ab4ce897c9f8d00a6cf2519ecc28f8b5a
+    InstallerUrl: https://github.com/bugtsa/ai-pdlc/releases/download/v0.1.1/ai-pdlc-0.1.1-windows-portable.zip
+    InstallerSha256: 87360A611884F981324B9216A4185CD7AF79E2E615145C81E912D300B659B280
 ManifestType: installer
-ManifestVersion: 1.10.0
+ManifestVersion: 1.12.0

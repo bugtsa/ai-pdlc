@@ -1,10 +1,10 @@
 {
   "name": "ai-pdlc",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Cross-client AI-PDLC CLI, skill bundle, and local MCP server",
   "author": "Vladimir Polkhovtsev",
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "homepage": "https://github.com/bugtsa/ai-pdlc",
   "bugs": {
     "url": "https://github.com/bugtsa/ai-pdlc/issues"

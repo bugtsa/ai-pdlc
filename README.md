@@ -12,7 +12,7 @@ This repository packages:
 
 Canonical upstream: `https://github.com/bugtsa/ai-pdlc`
 
-Latest release: `https://github.com/bugtsa/ai-pdlc/releases/tag/v0.1.0`
+Latest release: `https://github.com/bugtsa/ai-pdlc/releases/latest`
 
 ## Repository Layout
 
@@ -53,13 +53,13 @@ brew install bugtsa/ai-pdlc/ai-pdlc
 
 ### Claude Desktop
 
-- Download `ai-pdlc-0.1.0.mcpb` from the GitHub release assets.
+- Download the latest `.mcpb` asset from the GitHub release page.
 - Open it in Claude Desktop and choose the target repo root when prompted.
 
 ### Windows
 
-- The release already includes `ai-pdlc-0.1.0-windows-portable.zip`.
-- WinGet manifests are checked in under `packaging/winget/` and are ready for submission, but they are not yet merged into the public WinGet community index.
+- The release includes a Windows portable zip with native `.exe` launchers.
+- WinGet manifests are checked in under `packaging/winget/`.
 
 ## Local Development
 
@@ -157,7 +157,7 @@ The generated `.mcpb` bundle is unsigned by default. If you need trust metadata,
 
 ## License Status
 
-The repository is public, but the package is currently marked `UNLICENSED`. If you want third parties to reuse or redistribute it, add an explicit open-source license before publishing to package indexes.
+This repository is released under `Apache-2.0`.
 
 ## Current Status
 
